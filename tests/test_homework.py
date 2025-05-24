@@ -11,11 +11,18 @@ def test_01():
 
     # Test if the homework script runs without errors
     try:
-        subprocess.run("source run.sh",
-            shell=True,
-            check=True,
-            executable="/bin/bash"
-        )
+        for entry_point in ["elasticnet", "knn"]:
+            subprocess.run(
+                [
+                    "mlflow",
+                    "run",
+                    "--env-manager=local",
+                    "-e",
+                    entry_point,
+                    ".",
+                ],
+                check=True,
+            )
     except subprocess.CalledProcessError as e:
         raise Exception(f"Error running the homework script: {e}")
 
